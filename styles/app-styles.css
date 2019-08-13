@@ -21,24 +21,40 @@ body {
     z-index: 1000;
 }
 
-button {cursor: pointer; font-family: monospace;}
+button {
+    cursor: pointer;
+    font-family: monospace;
+    display: block;
+    margin: var(--space) auto;
+    border: var(--border); border-radius: var(--borderRad);
+}
+
+
+
+
 
 /* play button */
 [data-control="play"] {
 	background-color: pink;
-	display: block;
-	margin: var(--space) auto; padding: var(--space) var(--space) var(--space) calc(var(--space)*4);
-	border: var(--border); border-radius: var(--borderRad);
+    padding: var(--space) var(--space) var(--space) calc(var(--space)*3);
 }
 [data-on="false"], [data-on="true"]:hover {
-		background: hotpink url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" fill="black" /></svg>') no-repeat left center;
-		background-size: 50% 50%;
-		cursor: pointer;
+    background: hotpink url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" fill="black" /></svg>') no-repeat left center;
+    background-size: 50% 50%;
+    cursor: pointer;
 }
 [data-control="play"]:hover {background-color: lightgreen;}
 [data-on="true"] {
 	background: lightgreen url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M144 479H48c-26.5 0-48-21.5-48-48V79c0-26.5 21.5-48 48-48h96c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48zm304-48V79c0-26.5-21.5-48-48-48h-96c-26.5 0-48 21.5-48 48v352c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48z" fill="black" /></svg>') no-repeat left center;
 	background-size: 50% 50%;
+}
+
+/* Toggle button */
+[data-control="toggleTrack"],  [data-control="toggleTrack"]:active {
+    background: #ffaa54 url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBvbHlsaW5lIHBvaW50cz0iOSAxOCAxNSAxMiA5IDYiLz48L3N2Zz4=) no-repeat left center;
+    background-size: 50% 50%;
+    cursor: pointer;
+    padding: var(--space) var(--space) var(--space) calc(var(--space)*3);
 }
 
 /* filter button */

@@ -1,7 +1,7 @@
 // Creates analyser & has methods to get data, bass, beats etc... ideally
 // TODO switch source method
 class Analyser {
-  
+
   // set id to null & if it's set on instigation run soundcloud not local
   constructor(dataSize = 512, trackID = null) {
     this.audio_ctx = new AudioContext();
@@ -13,11 +13,11 @@ class Analyser {
     } else {
       this.track = this._createTrack();
     }
-    
+
     this.dataSize = dataSize;
     this.data = new Uint8Array(this.dataSize);
     this.frequencies = [];
-    
+
     this.analyser_node = this._createAnalyserNode();
 
     this.source = this._getSource();
@@ -27,7 +27,7 @@ class Analyser {
   getFrequencies() {
 		return this.data.slice(0, this.dataSize/3);
 	}
-  
+
   // TODO add if mic or if music
   _getSource() {
     // pipe in analysing to getUserMedia
@@ -39,18 +39,18 @@ class Analyser {
           return source;
         });
     } else {
-      
+
       return new Promise((resolve, reject) => {
         resolve(this.audio_ctx.createMediaElementSource(this.track));
       }).then(source => {
           source.connect(this.analyser_node).connect(this.audio_ctx.destination);
           return source;
       });
-      
-    } 
-    
+
+    }
+
   }
-  
+
   // create an analyser node
   _createAnalyserNode() {
     return new AnalyserNode(this.audio_ctx, {
@@ -60,24 +60,26 @@ class Analyser {
       smoothingTimeConstant: 0.5,
     })
   }
-  
+
   getData() {
     this.analyser_node.getByteFrequencyData(this.data);
   }
 
   _createTrack() {
+    const mp3Regex = /[a-z\-]+\.mp3$/gi;
+
     this.audio = new Audio(this.source);
     this.audio.crossOrigin = "anonymous";
     // track id is null use local track
-    if (this.track_id === '/beast.mp3') {
-      this.audio.src = '/beast.mp3';
+    if (this.track_id.match(/[a-z\-]+\.mp3$/gi)) {
+      this.audio.src = this.track_id;
     } else { // use sound cloud
       this.client_id = 'z8LRYFPM4UK5MMLaBe9vixfph5kqNA25';
       this.audio.src = `https://api.soundcloud.com/tracks/${this.track_id}/stream?client_id=${this.client_id}`;
     }
     return this.audio;
   }
-  
+
   run() {
 		// check if context is in suspended state (autoplay policy)
 		if (this.audio_ctx.state === 'suspended') {
@@ -88,7 +90,7 @@ class Analyser {
     }
     this.source.then(this.getData());
   }
-  
+
   disconnect() {
     if (!this.useMic) {
       this.track.pause();
