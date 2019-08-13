@@ -93,6 +93,8 @@ class Analyser {
     if (!this.useMic) {
       this.track.pause();
     }
+
+    this.track.currentTime = 0;
     // this.analyser_node.disconnect();
   }
 }
