@@ -66,8 +66,6 @@ class Analyser {
   }
 
   _createTrack() {
-    const mp3Regex = /[a-z\-]+\.mp3$/gi;
-
     this.audio = new Audio(this.source);
     this.audio.crossOrigin = "anonymous";
     // track id is null use local track
@@ -95,7 +93,7 @@ class Analyser {
     if (!this.useMic) {
       this.track.pause();
     }
-    this.analyser_node.disconnect();
+    // this.analyser_node.disconnect();
   }
 }
 
