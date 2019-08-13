@@ -53,18 +53,19 @@ let timerIterator = 0;
 
 // setup our draw loop: THIS IS WHERE THE MAGIC HAPPENS!!
 vis.draw( () => {
-
 	ctx.clearRect(0, 0, screenDim.width, screenDim.height);
 	// loop over our frequencies and draw a shape for each one
+
+	const baseTrebbleCutOff = Math.floor(vis.frequencies.length / 2);
+	const size = Math.floor((screenDim.height / 2) / baseTrebbleCutOff);
+
 	vis.frequencies.forEach((f, i) => {
-		let positionX = i * 20;
-		let positionY = positionX;
-		let frequency = f;
+		let positionX = 0;
+		let positionY = i * size;
 		let sequence = 0;
 
-		if (i > Math.floor(vis.frequencies.length / 2)) {
-			positionX = screenDim.width - (i * 20);
-			positionY = screenDim.height - (i * 20);
+		if (i > baseTrebbleCutOff) {
+			positionX = screenDim.width;
 			sequence = 1;
 		} else if (i === 8) {
 			positionX = screenDim.centerX;
@@ -104,7 +105,15 @@ vis.draw( () => {
 
 		ctx.beginPath();
 		ctx.fillStyle = `hsl(${color}, 100%, ${level}%)`;
-		ctx.arc(positionX, positionY, frequency, 0, 2 * Math.PI);
+
+		if (sequence === 2) {
+            ctx.arc(positionX, positionY, f, 0, 2 * Math.PI);
+        } else if (sequence === 1) {
+			ctx.rect(positionX - (f * 5), positionY, f * 5, size);
+		} else {
+			ctx.rect(positionX, positionY, f * 5, size);
+		}
+
 		ctx.fill();
 		ctx.closePath();
 	});
