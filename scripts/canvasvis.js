@@ -149,10 +149,13 @@ let colorIterator3 = 180;
 		for (let i = 0; i < 360; i += (360 / bars)) {
 			iterator++;
 
+			let f =  micVisualization.frequencies[iterator];
 			let barWidth = 2 * Math.PI * r / bars;
-			let barHeight = micVisualization.frequencies[iterator] * 5;
+			let barHeight = f * 5;
+            let level = Math.floor((f / 255) * 100);
+            let color = colorIterator3;
 
-			ctx2.fillStyle = "green";
+			ctx2.fillStyle = `hsl(${color}, 100%, ${level}%)`;
 
 			ctx2.save();
 			ctx2.rotate(i * Math.PI / 180);
@@ -178,4 +181,4 @@ controls.querySelector('[data-control="play"]').addEventListener('click', functi
     	musicVisualization.stop();
     	micVisualization.stop();
 	}
-})
+});
