@@ -45,44 +45,12 @@ const elAmount = Math.floor(binSize/3); // Returned frequncies is a third
 // const vis = new Vis(binSize, '/beast.mp3');
 const vis = new Vis(binSize, '131593389');
 
-const initColor = [0, 128, 128]; // lavender
-
-let color = [...initColor];
-let colorIndex = 0;
-let colorIndex2 = 1;
+let colorIterator = 0;
+const colorRate = 50;
+let timerIterator = 0;
 
 // setup our draw loop: THIS IS WHERE THE MAGIC HAPPENS!!
 vis.draw( () => {
-
-	++color[colorIndex];
-	--color[colorIndex2];
-
-	if (color[colorIndex] >= 255) {
-		if (colorIndex == color.length - 1) {
-			colorIndex = 0;
-			color = [...initColor];
-		} else {
-			colorIndex++;
-		}
-	}
-
-	if (color[colorIndex2] <= 0) {
-		if (colorIndex2 <= 0) {
-			colorIndex2 = color.length - 1;
-		} else {
-			colorIndex2--;
-		}
-	}
-
-	if (colorIndex === colorIndex2) {
-		if (colorIndex === 0) {
-            colorIndex2 = color.length - 1;
-        } else if (colorIndex === color.length - 1) {
-			colorIndex = 0;
-		} else {
-			colorIndex++;
-		}
-	}
 
 	ctx.clearRect(0, 0, screenDim.width, screenDim.height);
 	// loop over our frequencies and draw a shape for each one
@@ -98,14 +66,27 @@ vis.draw( () => {
 			positionY = screenDim.centerY;
 		}
 
+		++timerIterator;
+
+		if (timerIterator % colorRate === 0) {
+			++colorIterator;
+		}
+
+		if (colorIterator >= 360) {
+			colorIterator = 0;
+			timerIterator = 0;
+		}
+
+		let level = Math.floor((f / 255) * 100);
+
 		ctx.beginPath();
-		ctx.fillStyle = `rgb(${color.join(', ')}`;
+		ctx.fillStyle = `hsl(${colorIterator}, 100%, ${level}%)`;
 		ctx.arc(positionX, positionY, f, 0, 5);
 		ctx.fill();
 		ctx.closePath();
 	})
 
-} )
+});
 
 
 // ===================== CONTROLS edit here if you want to start/stop multiple vis
