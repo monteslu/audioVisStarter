@@ -94,7 +94,10 @@ class Analyser {
       this.track.pause();
     }
 
-    this.track.currentTime = 0;
+    if (this.track) {
+      this.track.currentTime = 0;
+    }
+
     // this.analyser_node.disconnect();
   }
 }
