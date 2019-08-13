@@ -2,8 +2,6 @@ console.clear();
 // import framework
 import Vis from '/modules/Vis.js';
 
-item 8
-
 // setup
 const visEl = document.querySelector('#visual');
 // setup 2D canvas plus resize
@@ -47,9 +45,6 @@ const elAmount = Math.floor(binSize/3); // Returned frequncies is a third
 // const vis = new Vis(binSize, '/beast.mp3');
 const vis = new Vis(binSize, '131593389');
 
-
-
-
 const initColor = [0, 128, 128]; // lavender
 
 let color = [...initColor];
@@ -92,10 +87,20 @@ vis.draw( () => {
 	ctx.clearRect(0, 0, screenDim.width, screenDim.height);
 	// loop over our frequencies and draw a shape for each one
 	vis.frequencies.forEach((f, i) => {
+		let positionX = i * 20;
+		let positionY = positionX;
+
+		if (i > Math.floor(vis.frequencies.length / 2)) {
+			positionX = screenDim.width - (i * 20);
+			positionY = screenDim.height - (i * 20);
+		} else if (i === 0) {
+			positionX = screenDim.centerX;
+			positionY = screenDim.centerY;
+		}
+
 		ctx.beginPath();
-		ctx.fillStyle = 'rgb(0, 255, 0)';
 		ctx.fillStyle = `rgb(${color.join(', ')}`;
-		ctx.arc(i*20, i*20, f, 0, 5);
+		ctx.arc(positionX, positionY, f, 0, 5);
 		ctx.fill();
 		ctx.closePath();
 	})
