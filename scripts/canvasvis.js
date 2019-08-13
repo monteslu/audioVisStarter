@@ -61,7 +61,7 @@ vis.draw( () => {
 		if (i > Math.floor(vis.frequencies.length / 2)) {
 			positionX = screenDim.width - (i * 20);
 			positionY = screenDim.height - (i * 20);
-		} else if (i === 0) {
+		} else if (i === 8) {
 			positionX = screenDim.centerX;
 			positionY = screenDim.centerY;
 		}
@@ -81,11 +81,10 @@ vis.draw( () => {
 
 		ctx.beginPath();
 		ctx.fillStyle = `hsl(${colorIterator}, 100%, ${level}%)`;
-		ctx.arc(positionX, positionY, f, 0, 5);
+		ctx.arc(positionX, positionY, f, 0, 2 * Math.PI);
 		ctx.fill();
 		ctx.closePath();
-	})
-
+	});
 });
 
 
