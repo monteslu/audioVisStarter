@@ -46,6 +46,8 @@ const elAmount = Math.floor(binSize/3); // Returned frequncies is a third
 const vis = new Vis(binSize, '131593389');
 
 let colorIterator = 0;
+let colorIterator2 = 360;
+let colorIterator3 = 180;
 const colorRate = 50;
 let timerIterator = 0;
 
@@ -57,19 +59,25 @@ vis.draw( () => {
 	vis.frequencies.forEach((f, i) => {
 		let positionX = i * 20;
 		let positionY = positionX;
+		let frequency = f;
+		let sequence = 0;
 
 		if (i > Math.floor(vis.frequencies.length / 2)) {
 			positionX = screenDim.width - (i * 20);
 			positionY = screenDim.height - (i * 20);
+			sequence = 1;
 		} else if (i === 8) {
 			positionX = screenDim.centerX;
 			positionY = screenDim.centerY;
+			sequence = 2;
 		}
 
 		++timerIterator;
 
 		if (timerIterator % colorRate === 0) {
 			++colorIterator;
+			--colorIterator2;
+            ++colorIterator3;
 		}
 
 		if (colorIterator >= 360) {
@@ -77,11 +85,26 @@ vis.draw( () => {
 			timerIterator = 0;
 		}
 
+		if (colorIterator2 <= 0) {
+			colorIterator2 = 360;
+		}
+
+		if (colorIterator3 >= 360) {
+			colorIterator3 = 0;
+		}
+
 		let level = Math.floor((f / 255) * 100);
+		let color = colorIterator;
+
+		if (sequence === 1) {
+			color = colorIterator2;
+		} else if (sequence === 2) {
+			color = colorIterator3;
+		}
 
 		ctx.beginPath();
-		ctx.fillStyle = `hsl(${colorIterator}, 100%, ${level}%)`;
-		ctx.arc(positionX, positionY, f, 0, 2 * Math.PI);
+		ctx.fillStyle = `hsl(${color}, 100%, ${level}%)`;
+		ctx.arc(positionX, positionY, frequency, 0, 2 * Math.PI);
 		ctx.fill();
 		ctx.closePath();
 	});
