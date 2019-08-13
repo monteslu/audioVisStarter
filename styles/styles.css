@@ -10,7 +10,11 @@
 .svg {}
 
 .canvas canvas {
-	background-color: black;
+    background-color: black;
 	width: 100%;
 	height: 100%;
+}
+
+.canvas canvas.transparent {
+    background-color: transparent;
 }
