@@ -6,7 +6,7 @@ class Analyser {
   constructor(dataSize = 512, trackID = null) {
     this.audio_ctx = new AudioContext();
 
-    this.useMic = false;
+    this.useMic = true;
     this.track_id = trackID;
     if (this.track_id === null) {
       this.useMic = true
